@@ -1,0 +1,491 @@
+{
+  "generated_at": "2026-10-18T12:55:10.312633+00:00",
+  "question_count": 20,
+  "top_k": 3,
+  "metadata_filter": {
+    "source": {
+      "$in": [
+        "sample_handbook.md",
+        "it_operations.md"
+      ]
+    }
+  },
+  "evaluation_sources": [
+    "it_operations.md",
+    "sample_handbook.md"
+  ],
+  "metrics": {
+    "recall_at_3": 0.875,
+    "hit_rate_at_3": 0.9,
+    "mrr": 0.9,
+    "ndcg_at_3": 0.8807,
+    "context_precision": 0.6167
+  },
+  "retrieval_latency_ms": {
+    "p50": 17.09,
+    "p95": 558.75
+  },
+  "per_question": [
+    {
+      "id": "q01",
+      "question": "What are the standard working days and hours?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 7962.69,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q02",
+      "question": "Is the lunch break counted as working time?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 38.49,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q03",
+      "question": "How many days per week can an employee work remotely with approval?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_2",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "it_operations.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 169.07,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.3333333333333333
+      }
+    },
+    {
+      "id": "q04",
+      "question": "How much annual leave and sick leave does a full-time employee receive?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 24.05,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q05",
+      "question": "How many unused annual-leave days can be carried into the next year?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 8.6,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q06",
+      "question": "When does carried-over annual leave expire?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 158.88,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q07",
+      "question": "How early should employees request one or two days of leave?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "sample_handbook.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 151.17,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.3333333333333333
+      }
+    },
+    {
+      "id": "q08",
+      "question": "What should an employee do when a company device is lost or stolen?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_1"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "it_operations.md",
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 42.49,
+      "metrics": {
+        "recall_at_3": 0.5,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 0.6131471927654584,
+        "context_precision": 0.3333333333333333
+      }
+    },
+    {
+      "id": "q09",
+      "question": "What are the company's authentication and password rules?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 149.54,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q10",
+      "question": "How long are backup files retained?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_1"
+      ],
+      "retrieved_sources": [
+        "it_operations.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 145.12,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.5
+      }
+    },
+    {
+      "id": "q11",
+      "question": "When does the IT team check backup completion logs?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3"
+      ],
+      "retrieved_sources": [
+        "it_operations.md",
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 8.39,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.5
+      }
+    },
+    {
+      "id": "q12",
+      "question": "What is the restoration target for critical databases?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3"
+      ],
+      "retrieved_sources": [
+        "it_operations.md",
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 8.24,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.5
+      }
+    },
+    {
+      "id": "q13",
+      "question": "Who must approve an employee's system access request?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_0"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_1"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "it_operations.md",
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 10.13,
+      "metrics": {
+        "recall_at_3": 0.0,
+        "hit_rate_at_3": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_3": 0.0,
+        "context_precision": 0.0
+      }
+    },
+    {
+      "id": "q14",
+      "question": "How quickly must a Severity 1 incident be acknowledged?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_1"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_2",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3"
+      ],
+      "retrieved_sources": [
+        "it_operations.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 6.69,
+      "metrics": {
+        "recall_at_3": 0.0,
+        "hit_rate_at_3": 0.0,
+        "mrr": 0.0,
+        "ndcg_at_3": 0.0,
+        "context_precision": 0.0
+      }
+    },
+    {
+      "id": "q15",
+      "question": "What triggers a CPU usage warning?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_2"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_2"
+      ],
+      "retrieved_sources": [
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 6.3,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q16",
+      "question": "What disk-space condition triggers a high-priority alert?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_2"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_2"
+      ],
+      "retrieved_sources": [
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 6.41,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 1.0
+      }
+    },
+    {
+      "id": "q17",
+      "question": "What must a production change request describe?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3"
+      ],
+      "retrieved_sources": [
+        "it_operations.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 168.67,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.5
+      }
+    },
+    {
+      "id": "q18",
+      "question": "When is the routine production maintenance window?",
+      "relevant_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3"
+      ],
+      "retrieved_chunk_ids": [
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_0",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3"
+      ],
+      "retrieved_sources": [
+        "it_operations.md",
+        "sample_handbook.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 8.0,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.3333333333333333
+      }
+    },
+    {
+      "id": "q19",
+      "question": "When must expense claims be submitted, and when is a receipt required?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_2",
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "sample_handbook.md"
+      ],
+      "retrieval_latency_ms": 8.03,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.5
+      }
+    },
+    {
+      "id": "q20",
+      "question": "What are the initial response targets for urgent and normal-priority support tickets?",
+      "relevant_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3"
+      ],
+      "retrieved_chunk_ids": [
+        "e21cb36c21c12b261eea27e6943312c637da1b7dca07dc0f987209b659bafa65_3",
+        "8efc3d1ca380ae307cd7f53e8648a16aa7185269c6ae6c5adc7d40e3e5028825_3"
+      ],
+      "retrieved_sources": [
+        "sample_handbook.md",
+        "it_operations.md"
+      ],
+      "retrieval_latency_ms": 8.27,
+      "metrics": {
+        "recall_at_3": 1.0,
+        "hit_rate_at_3": 1.0,
+        "mrr": 1.0,
+        "ndcg_at_3": 1.0,
+        "context_precision": 0.5
+      }
+    }
+  ]
+}

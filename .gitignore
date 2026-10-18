@@ -1,0 +1,17 @@
+.venv/
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+
+# Local documents and vector database
+data/
+logs/
+results/
+
+# Exported text from my private report
+evaluation/chunks.csv
+
+# Local model and test artifacts
+*.pkl

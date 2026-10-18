@@ -1,0 +1,178 @@
+
+{
+  "top_k": 3,
+  "metadata_filter": {
+    "source": {
+      "$in": [
+        "sample_handbook.md",
+        "it_operations.md"
+      ]
+    }
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "question": "What are the standard working days and hours?",
+      "expected_answer": "The standard working week is Monday to Friday, from 9:00 AM to 5:30 PM.",
+      "relevant_texts": [
+        "The normal working week is Monday to Friday.",
+        "Standard working hours are 9:00 AM to 5:30 PM."
+      ]
+    },
+    {
+      "id": "q02",
+      "question": "Is the lunch break counted as working time?",
+      "expected_answer": "No, the lunch break is not counted as working time.",
+      "relevant_texts": [
+        "The lunch break is not counted as working time."
+      ]
+    },
+    {
+      "id": "q03",
+      "question": "How many days per week can an employee work remotely with approval?",
+      "expected_answer": "Up to two days per week, with manager approval.",
+      "relevant_texts": [
+        "Remote work is permitted for up to two days each week with manager approval."
+      ]
+    },
+    {
+      "id": "q04",
+      "question": "How much annual leave and sick leave does a full-time employee receive?",
+      "expected_answer": "18 days of annual leave and 8 days of sick leave per calendar year.",
+      "relevant_texts": [
+        "18 days of annual leave and 8 days of sick leave each calendar year."
+      ]
+    },
+    {
+      "id": "q05",
+      "question": "How many unused annual-leave days can be carried into the next year?",
+      "expected_answer": "A maximum of five unused annual-leave days.",
+      "relevant_texts": [
+        "A maximum of five unused annual-leave days may be carried into the next year."
+      ]
+    },
+    {
+      "id": "q06",
+      "question": "When does carried-over annual leave expire?",
+      "expected_answer": "March 31.",
+      "relevant_texts": [
+        "Any carried-over leave expires on March 31."
+      ]
+    },
+    {
+      "id": "q07",
+      "question": "How early should employees request one or two days of leave?",
+      "expected_answer": "At least three business days in advance.",
+      "relevant_texts": [
+        "Employees requesting one or two days of leave should submit the request at least three business days in advance."
+      ]
+    },
+    {
+      "id": "q08",
+      "question": "What should an employee do when a company device is lost or stolen?",
+      "expected_answer": "Report it to both the IT team and the employee's manager within one hour of discovery.",
+      "relevant_texts": [
+        "A lost or stolen device must be reported to both the IT team and the employee's manager within one hour of discovery."
+      ]
+    },
+    {
+      "id": "q09",
+      "question": "What are the company's authentication and password rules?",
+      "expected_answer": "Multi-factor authentication is required for company accounts, and passwords must never be shared.",
+      "relevant_texts": [
+        "Multi-factor authentication (MFA) is required for company accounts.",
+        "Passwords must never be shared."
+      ]
+    },
+    {
+      "id": "q10",
+      "question": "How long are backup files retained?",
+      "expected_answer": "Backup files are retained for 30 calendar days.",
+      "relevant_texts": [
+        "Backup files are retained for 30 calendar days."
+      ]
+    },
+    {
+      "id": "q11",
+      "question": "When does the IT team check backup completion logs?",
+      "expected_answer": "Every morning before 9:00 AM.",
+      "relevant_texts": [
+        "The IT operations team checks backup completion logs every morning before 9:00 AM."
+      ]
+    },
+    {
+      "id": "q12",
+      "question": "What is the restoration target for critical databases?",
+      "expected_answer": "Within four hours of an approved recovery request.",
+      "relevant_texts": [
+        "Critical databases must be restored within four hours of an approved recovery request."
+      ]
+    },
+    {
+      "id": "q13",
+      "question": "Who must approve an employee's system access request?",
+      "expected_answer": "A manager must approve the request before the IT team grants permission.",
+      "relevant_texts": [
+        "A manager must approve each access request before the IT team grants permission."
+      ]
+    },
+    {
+      "id": "q14",
+      "question": "How quickly must a Severity 1 incident be acknowledged?",
+      "expected_answer": "Within 10 minutes, and the incident manager must be notified immediately.",
+      "relevant_texts": [
+        "The on-call engineer must acknowledge a Severity 1 incident within 10 minutes and immediately notify the incident manager."
+      ]
+    },
+    {
+      "id": "q15",
+      "question": "What triggers a CPU usage warning?",
+      "expected_answer": "CPU usage above 85 percent for ten consecutive minutes.",
+      "relevant_texts": [
+        "CPU usage above 85 percent for ten consecutive minutes triggers a warning."
+      ]
+    },
+    {
+      "id": "q16",
+      "question": "What disk-space condition triggers a high-priority alert?",
+      "expected_answer": "Available disk space below 15 percent.",
+      "relevant_texts": [
+        "Available disk space below 15 percent triggers a high-priority alert."
+      ]
+    },
+    {
+      "id": "q17",
+      "question": "What must a production change request describe?",
+      "expected_answer": "Its purpose, expected impact, implementation steps, and rollback plan.",
+      "relevant_texts": [
+        "The request must describe the purpose, expected impact, implementation steps, and rollback plan."
+      ]
+    },
+    {
+      "id": "q18",
+      "question": "When is the routine production maintenance window?",
+      "expected_answer": "Wednesdays from 10:00 PM to midnight.",
+      "relevant_texts": [
+        "Routine changes should be scheduled during the approved maintenance window from 10:00 PM to midnight on Wednesdays."
+      ]
+    },
+    {
+      "id": "q19",
+      "question": "When must expense claims be submitted, and when is a receipt required?",
+      "expected_answer": "Within 10 calendar days of the expense date. Receipts are required for individual expenses above ₹500.",
+      "relevant_texts": [
+        "Employees must submit expense claims within 10 calendar days of the expense date.",
+        "A receipt is required for every individual expense above ₹500."
+      ]
+    },
+    {
+      "id": "q20",
+      "question": "What are the initial response targets for urgent and normal-priority support tickets?",
+      "expected_answer": "Urgent tickets require an initial response within one hour, while normal-priority tickets require one within one business day.",
+      "relevant_texts": [
+        "Urgent support tickets should receive an initial response within one hour.",
+        "Normal-priority tickets should receive an initial response within one business day."
+      ]
+    }
+  ]
+}

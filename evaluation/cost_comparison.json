@@ -1,0 +1,61 @@
+{
+  "generated_on": "2026-10-18",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "dimensions": 384,
+  "float_bytes": 4,
+  "average_chunk_text_bytes": 1024,
+  "average_metadata_bytes": 512,
+  "index_storage_overhead_factor": 1.5,
+  "estimated_bytes_per_vector": 4608.0,
+  "currency": "USD",
+  "month": "Monthly list-price estimate",
+  "excludes": [
+    "API and LLM charges",
+    "Embedding-generation charges",
+    "Taxes",
+    "Monitoring and backup add-ons",
+    "Engineering and maintenance labour",
+    "Additional storage or compute beyond the selected plans"
+  ],
+  "chroma_price_source": "https://www.digitalocean.com/pricing/droplets",
+  "managed_price_source": "https://www.digitalocean.com/pricing/managed-databases",
+  "limitations": "Storage is a planning estimate, not a measured ChromaDB database size. Hosting plans are not performance-equivalent. Benchmark latency and verify memory requirements before claiming production capacity.",
+  "results": [
+    {
+      "vectors": 100000,
+      "embedding_dimensions": 384,
+      "estimated_storage_gb": 0.46,
+      "estimated_storage_gib": 0.43,
+      "chroma_host_plan": "2 GiB RAM, 1 vCPU, 50 GiB SSD",
+      "chroma_monthly_usd": 12.0,
+      "managed_database_plan": "PostgreSQL Standard, 1 GiB RAM",
+      "managed_monthly_usd": 15.15,
+      "chroma_savings_vs_managed_usd": 3.15,
+      "notes": "Small workload; managed plan includes 10-30 GiB storage."
+    },
+    {
+      "vectors": 1000000,
+      "embedding_dimensions": 384,
+      "estimated_storage_gb": 4.61,
+      "estimated_storage_gib": 4.29,
+      "chroma_host_plan": "8 GiB RAM, 4 vCPU, 160 GiB SSD",
+      "chroma_monthly_usd": 48.0,
+      "managed_database_plan": "PostgreSQL Standard, 2 GiB RAM",
+      "managed_monthly_usd": 30.45,
+      "chroma_savings_vs_managed_usd": -17.55,
+      "notes": "Managed plan includes 30-60 GiB storage."
+    },
+    {
+      "vectors": 10000000,
+      "embedding_dimensions": 384,
+      "estimated_storage_gb": 46.08,
+      "estimated_storage_gib": 42.92,
+      "chroma_host_plan": "32 GiB RAM, 8 vCPU, 100 GiB SSD",
+      "chroma_monthly_usd": 252.0,
+      "managed_database_plan": "PostgreSQL Standard, 4 GiB RAM",
+      "managed_monthly_usd": 60.9,
+      "chroma_savings_vs_managed_usd": -191.1,
+      "notes": "Managed plan includes 60-120 GiB storage. Validate RAM and latency; a larger plan may be needed."
+    }
+  ]
+}
