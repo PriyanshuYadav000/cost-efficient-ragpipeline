@@ -1,5 +1,5 @@
-
 import hashlib
+import re
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -7,12 +7,15 @@ from pypdf import PdfReader
 
 from app.config import CHUNK_SIZE, CHUNK_OVERLAP, SUPPORTED_EXTENSIONS
 
+
 def get_file_hash(file_path: str | Path) -> str:
     """Create a stable hash to identify the document."""
     file_hash = hashlib.sha256()
+
     with open(file_path, "rb") as file:
         for block in iter(lambda: file.read(8192), b""):
             file_hash.update(block)
+
     return file_hash.hexdigest()
 
 
@@ -20,25 +23,34 @@ def extract_text(file_path: str | Path) -> list[dict]:
     """Extract text from PDF, HTML or Markdown files."""
     path = Path(file_path)
     extension = path.suffix.lower()
+
     if extension not in SUPPORTED_EXTENSIONS:
         raise ValueError(f"Unsupported file type: {extension}")
-    
+
     pages = []
 
     if extension == ".pdf":
         reader = PdfReader(str(path))
+
         for page_number, page in enumerate(reader.pages, start=1):
             text = page.extract_text() or ""
+
             if text.strip():
                 pages.append({
                     "text": text.strip(),
                     "page": page_number,
                 })
+
     elif extension in {".html", ".htm"}:
-        html = path.read_text(encoding="utf-8", errors="replace")
+        html = path.read_text(
+            encoding="utf-8",
+            errors="replace"
+        )
         soup = BeautifulSoup(html, "html.parser")
+
         for tag in soup(["script", "style", "noscript"]):
             tag.decompose()
+
         text = soup.get_text(separator="\n", strip=True)
 
         if text:
@@ -46,24 +58,34 @@ def extract_text(file_path: str | Path) -> list[dict]:
                 "text": text,
                 "page": 1,
             })
+
     else:
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = path.read_text(
+            encoding="utf-8",
+            errors="replace"
+        )
+
         if text.strip():
             pages.append({
                 "text": text.strip(),
                 "page": 1,
             })
+
     if not pages:
         raise ValueError(
-            f"No readable text found in {path.name}. " "Scanned PDFs may require OCR."
+            f"No readable text found in {path.name}. "
+            "Scanned PDFs may require OCR."
         )
+
     return pages
 
+
 def split_text(text: str) -> list[str]:
-    """Split text into overlapping character-based chunks."""
+    """Split text while preferring paragraph and sentence boundaries."""
     text = text.strip()
 
-    if not text: return []
+    if not text:
+        return []
 
     chunks = []
     start = 0
@@ -71,14 +93,37 @@ def split_text(text: str) -> list[str]:
     while start < len(text):
         end = min(start + CHUNK_SIZE, len(text))
 
-        # Prefer ending at a word boundary when possible.
         if end < len(text):
-            boundary = max(
-                text.rfind(" ", start, end),
-                text.rfind("\n", start, end),
+            min_boundary = start + CHUNK_SIZE // 2
+
+            paragraph_boundary = text.rfind(
+                "\n\n",
+                min_boundary,
+                end
             )
-            if boundary > start + CHUNK_SIZE // 2:
-                end = boundary
+
+            if paragraph_boundary > start:
+                end = paragraph_boundary
+
+            else:
+                search_text = text[min_boundary:end]
+
+                sentences = list(
+                    re.finditer(r"[.!?](?=\s)", search_text)
+                )
+
+                if sentences:
+                    end = min_boundary + sentences[-1].end()
+
+                else:
+                    boundary = max(
+                        text.rfind(" ", min_boundary, end),
+                        text.rfind("\n", min_boundary, end),
+                    )
+
+                    if boundary > start:
+                        end = boundary
+
         chunk = text[start:end].strip()
 
         if chunk:
@@ -87,10 +132,7 @@ def split_text(text: str) -> list[str]:
         if end >= len(text):
             break
 
-        next_start = end - CHUNK_OVERLAP
-
-        # Ensure the loop always moves forward.
-        start = max(next_start, start + 1)
+        start = max(end - CHUNK_OVERLAP, start + 1)
 
     return chunks
 
