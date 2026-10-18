@@ -11,10 +11,11 @@ from groq import Groq
 from app.config import BASE_DIR, GROQ_API_KEY, JUDGE_MODEL
 from app.rag import answer_question
 
-
 EVAL_DIR = BASE_DIR / "evaluation"
 QUESTIONS_FILE = EVAL_DIR / "questions.json"
 RESULTS_FILE = EVAL_DIR / "answer_results.json"
+CHECKPOINT_FILE = EVAL_DIR / "answer_results_checkpoint.json"
+PARTIAL_FILE = EVAL_DIR / "answer_results_partial.json"
 
 
 def normalize(text):
@@ -167,15 +168,22 @@ def percentile(values, percent):
 
     return round(result, 2)
 
-
 def main():
     parser = argparse.ArgumentParser()
+
     parser.add_argument(
         "--limit",
         type=int,
         default=None,
-        help="Evaluate only the first N questions for a quick test"
+        help="Evaluate only the first N questions"
     )
+
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Resume from the saved checkpoint"
+    )
+
     args = parser.parse_args()
 
     if not GROQ_API_KEY:
@@ -191,55 +199,157 @@ def main():
             raise ValueError("--limit must be at least 1")
         questions = questions[:args.limit]
 
-    client = Groq(api_key=GROQ_API_KEY)
-    results = []
+    if args.limit is not None and args.resume:
+        parser.error("Use --limit for a preview, or --resume for the full evaluation.")
 
-    for item in questions:
-        print(f"Evaluating {item['id']}...")
+    checkpoint_file = (
+        CHECKPOINT_FILE if args.limit is None
+        else EVAL_DIR / "answer_results_preview_checkpoint.json"
+    )
 
-        # Generate a real answer using the existing RAG pipeline.
-        result = answer_question(
-            question=item["question"],
-            top_k=dataset["top_k"],
-            metadata_filter=dataset.get("metadata_filter")
+    output_file = (
+        RESULTS_FILE if args.limit is None
+        else EVAL_DIR / "answer_results_preview.json"
+    )
+
+    partial_file = (
+        PARTIAL_FILE if args.limit is None
+        else EVAL_DIR / "answer_results_preview_partial.json"
+    )
+
+    question_ids = {item["id"] for item in questions}
+    results_by_id = {}
+
+    if args.resume and checkpoint_file.exists():
+        with open(checkpoint_file, encoding="utf-8") as f:
+            checkpoint = json.load(f)
+
+        results_by_id = {
+            row["id"]: row
+            for row in checkpoint.get("results", [])
+            if row.get("id") in question_ids
+        }
+
+        print(
+            f"Resuming evaluation: "
+            f"{len(results_by_id)}/{len(questions)} cases already saved."
+        )
+    elif args.resume:
+        print("No checkpoint found. Starting a new evaluation.")
+
+    def ordered_results():
+        return [
+            results_by_id[item["id"]]
+            for item in questions
+            if item["id"] in results_by_id
+        ]
+
+    def save_checkpoint():
+        checkpoint = {
+            "judge_model": JUDGE_MODEL,
+            "results": ordered_results()
+        }
+
+        with open(checkpoint_file, "w", encoding="utf-8") as f:
+            json.dump(checkpoint, f, indent=2, ensure_ascii=False)
+
+    def valid_judge(row):
+        judge = row.get("judge") or {}
+
+        return (
+            judge.get("faithfulness_score") is not None
+            and judge.get("relevance_score") is not None
         )
 
-        answer = result["answer"]
-        expected = item["expected_answer"]
+    def is_rate_limit_error(error):
+        message = str(error).lower()
 
-        row = {
-            "id": item["id"],
-            "question": item["question"],
-            "expected_answer": expected,
-            "generated_answer": answer,
-            "exact_match": exact_match(answer, expected),
-            "token_f1": round(token_f1(answer, expected), 4),
-            "sources": result["sources"],
-            "chunks_retrieved": result["chunks_retrieved"],
-            "retrieval_ms": result["retrieval_ms"],
-            "generation_ms": result["generation_ms"],
-            "total_latency_ms": result["total_latency_ms"],
-            "generator_tokens": result["total_tokens"]
-        }
+        return (
+            getattr(error, "status_code", None) == 429
+            or "rate_limit" in message
+            or "rate limit" in message
+            or "429" in message
+        )
+
+    client = Groq(api_key=GROQ_API_KEY)
+    stopped_early = False
+
+    for item in questions:
+        question_id = item["id"]
+        existing = results_by_id.get(question_id)
+
+        if existing and valid_judge(existing):
+            print(f"Skipping {question_id}: already evaluated.")
+            continue
+
+        if existing and existing.get("generated_answer") is not None:
+            row = existing
+            print(f"Retrying judge for {question_id} using saved answer.")
+
+        else:
+            print(f"Evaluating {question_id}...")
+
+            try:
+                result = answer_question(
+                    question=item["question"],
+                    top_k=dataset["top_k"],
+                    metadata_filter=dataset.get("metadata_filter")
+                )
+
+            except Exception as error:
+                save_checkpoint()
+
+                print(
+                    f"Answer generation failed for {question_id}: {error}"
+                )
+                print("Completed results have been checkpointed.")
+
+                if is_rate_limit_error(error):
+                    print("Stopped because of an API rate limit.")
+
+                stopped_early = True
+                break
+
+            answer = result["answer"]
+            expected = item["expected_answer"]
+
+            row = {
+                "id": question_id,
+                "question": item["question"],
+                "expected_answer": expected,
+                "generated_answer": answer,
+                "exact_match": exact_match(answer, expected),
+                "token_f1": round(token_f1(answer, expected), 4),
+                "sources": result["sources"],
+                "chunks_retrieved": result["chunks_retrieved"],
+                "retrieval_ms": result["retrieval_ms"],
+                "generation_ms": result["generation_ms"],
+                "total_latency_ms": result["total_latency_ms"],
+                "generator_tokens": result["total_tokens"]
+            }
 
         try:
             verdict = judge_answer(
                 client,
                 item["question"],
-                expected,
-                answer,
-                result["sources"]
+                item["expected_answer"],
+                row["generated_answer"],
+                row["sources"]
             )
+
             row["judge"] = verdict
-        except Exception as e:
+
+        except Exception as error:
             row["judge"] = {
-                "error": str(e),
+                "error": str(error),
                 "faithfulness_score": None,
                 "relevance_score": None
             }
-            print(f"Judge failed for {item['id']}: {e}")
 
-        results.append(row)
+            print(f"Judge failed for {question_id}: {error}")
+
+        results_by_id[question_id] = row
+        save_checkpoint()
 
         print(
             f"EM={row['exact_match']:.0f}, "
@@ -247,63 +357,99 @@ def main():
             f"retrieval={row['retrieval_ms']:.1f} ms"
         )
 
+        if row["judge"].get("faithfulness_score") is None:
+            if is_rate_limit_error(
+                row["judge"].get("error", "")
+            ):
+                print("Stopped because of an API rate limit.")
+                stopped_early = True
+                break
+
+    results = ordered_results()
+
     valid_judges = [
         row["judge"] for row in results
-        if row["judge"].get("faithfulness_score") is not None
-        and row["judge"].get("relevance_score") is not None
+        if valid_judge(row)
     ]
 
     summary = {
         "questions_run": len(results),
+        "questions_requested": len(questions),
         "valid_judge_results": len(valid_judges),
+
         "exact_match_mean": round(
             sum(row["exact_match"] for row in results) / len(results), 4
         ) if results else None,
+
         "token_f1_mean": round(
             sum(row["token_f1"] for row in results) / len(results), 4
         ) if results else None,
+
         "faithfulness_mean_1_to_5": round(
             sum(j["faithfulness_score"] for j in valid_judges)
             / len(valid_judges), 3
         ) if valid_judges else None,
+
         "relevance_mean_1_to_5": round(
             sum(j["relevance_score"] for j in valid_judges)
             / len(valid_judges), 3
         ) if valid_judges else None,
+
         "retrieval_p50_ms": percentile(
             [row["retrieval_ms"] for row in results], 50
         ),
+
         "retrieval_p95_ms": percentile(
             [row["retrieval_ms"] for row in results], 95
         ),
+
         "end_to_end_p50_ms": percentile(
             [row["total_latency_ms"] for row in results], 50
         ),
+
         "end_to_end_p95_ms": percentile(
             [row["total_latency_ms"] for row in results], 95
         ),
+
         "generator_tokens": sum(
-            row["generator_tokens"] for row in results
+            row.get("generator_tokens", 0) for row in results
         ),
+
         "judge_tokens": sum(
-            j.get("judge_tokens", 0)
-            for j in valid_judges
+            j.get("judge_tokens", 0) for j in valid_judges
         )
     }
+
+    complete = (
+        len(results) == len(questions)
+        and len(valid_judges) == len(questions)
+    )
 
     report = {
         "generator_model": "configured by GROQ_MODEL",
         "judge_model": JUDGE_MODEL,
+        "complete": complete,
         "summary": summary,
         "results": results
     }
 
-    with open(RESULTS_FILE, "w", encoding="utf-8") as f:
+    report_file = output_file if complete else partial_file
+
+    with open(report_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
 
     print("\nEvaluation summary:")
     print(json.dumps(summary, indent=2))
-    print(f"\nSaved results to: {RESULTS_FILE}")
+    print(f"\nSaved report to: {report_file}")
+    print(f"Checkpoint saved to: {checkpoint_file}")
+
+    if not complete or stopped_early:
+        print(
+            "\nEvaluation is incomplete. After the API limit clears, "
+            "run: python -m evaluation.evaluate_answers --resume"
+        )
+    else:
+        print("\nAll requested questions have valid judge results.")
 
 
 if __name__ == "__main__":

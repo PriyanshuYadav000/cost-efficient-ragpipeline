@@ -15,3 +15,9 @@ evaluation/chunks.csv
 
 # Local model and test artifacts
 *.pkl
+# Incomplete evaluation checkpoints
+evaluation/answer_results_checkpoint.json
+evaluation/answer_results_partial.json
+evaluation/answer_results_preview_checkpoint.json
+evaluation/answer_results_preview.json
+evaluation/answer_results_preview_partial.json
